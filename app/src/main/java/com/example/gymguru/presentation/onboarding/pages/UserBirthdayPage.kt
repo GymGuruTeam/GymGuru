@@ -11,42 +11,58 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.gymguru.R
 import com.example.gymguru.presentation.composables.GymGuruButton
-import com.example.gymguru.presentation.composables.GymGuruOutlinedTextField
 import com.example.gymguru.presentation.onboarding.OnBoardingViewModel
 import com.example.gymguru.presentation.ui.theme.dimensions
+import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
+import com.maxkeppeler.sheets.calendar.CalendarDialog
+import com.maxkeppeler.sheets.calendar.models.CalendarConfig
+import com.maxkeppeler.sheets.calendar.models.CalendarSelection
+import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun UsernamePage(
+fun UserBirthdayPage(
     viewModel: OnBoardingViewModel,
     pagerState: PagerState
 ) {
     val viewState = viewModel.viewState.value
 
+    val calendarState = rememberUseCaseState()
+
+    CalendarDialog(
+        state = calendarState,
+        config = CalendarConfig(
+            yearSelection = true,
+            monthSelection = true,
+            style = CalendarStyle.MONTH
+        ),
+        selection = CalendarSelection.Date {
+            viewModel.updateBirthday(it)
+        }
+    )
+
     val scope = rememberCoroutineScope()
-
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.profile))
-
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.birthday))
     val progress by animateLottieCompositionAsState(
         composition,
-        iterations = 1,
+        iterations = LottieConstants.IterateForever,
         restartOnPlay = false
     )
 
@@ -55,11 +71,11 @@ fun UsernamePage(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(MaterialTheme.dimensions.xl),
-        horizontalAlignment = CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = stringResource(R.string.onboarding_provide_name_content),
+            text = stringResource(R.string.onboarding_provide_birthday_content),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground
         )
@@ -72,19 +88,13 @@ fun UsernamePage(
             progress = { progress }
         )
 
-        GymGuruOutlinedTextField(
-            modifier = Modifier.fillMaxWidth(0.7f),
-            state = viewState.name,
-            onValueChange = { viewModel.updateUsername(it) },
-            hint = stringResource(R.string.name)
-        )
-
-        GymGuruOutlinedTextField(
-            modifier = Modifier.fillMaxWidth(0.7f),
-            state = viewState.height,
-            keyboardType = KeyboardType.Number,
-            onValueChange = { viewModel.updateHeight(it) },
-            hint = stringResource(R.string.height)
+        GymGuruButton(
+            modifier = Modifier
+                .fillMaxWidth(0.7f),
+            text = viewState.birthday.toString(),
+            onClick = {
+                calendarState.show()
+            }
         )
 
         Row(
@@ -107,8 +117,6 @@ fun UsernamePage(
             GymGuruButton(
                 modifier = Modifier
                     .fillMaxWidth(0.4f),
-                enabled = !viewState.name.isError && viewState.name.value.isNotEmpty() &&
-                    !viewState.height.isError && viewState.height.value.isNotEmpty(),
                 text = stringResource(R.string.next),
                 onClick = {
                     scope.launch {

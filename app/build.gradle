@@ -95,6 +95,10 @@ dependencies {
     // lottie
     implementation "com.airbnb.android:lottie-compose:$lottie_version"
 
+    // date picker
+    implementation "com.maxkeppeler.sheets-compose-dialogs:core:$dialogs_version"
+    implementation "com.maxkeppeler.sheets-compose-dialogs:calendar:$dialogs_version"
+
     // test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

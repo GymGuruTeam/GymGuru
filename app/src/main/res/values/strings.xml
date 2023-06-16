@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">GymGuru</string>
+
+    <string name="name">Your Name</string>
+    <string name="height">Height (cm)</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="save">Save</string>
+
+    <!-- OnBoarding -->
+    <string name="onboarding_welcome_title">Welcome to our Gym App!</string>
+    <string name="onboarding_welcome_content">Get ready to challenge yourself, and achieve greatness. Let\'s make every rep count!</string>
+    <string name="onboarding_provide_name_content">It would be great if you could provide me with your name so that I can address you by name.</string>
+    <string name="onboarding_provide_birthday_content">Please provide your birthdate for us to assist you better.</string>
+    <string name="onboarding_finish_title">Done!</string>
 </resources>
