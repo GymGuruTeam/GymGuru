@@ -2,6 +2,7 @@ package com.example.gymguru.di
 
 import com.example.gymguru.data.local.LocalUserDataSource
 import com.example.gymguru.data.repository.UserRepositoryImpl
+import com.example.gymguru.domain.formatter.LocalDateFormatter
 import com.example.gymguru.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -15,6 +16,12 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideUserRepository(localUserDataSource: LocalUserDataSource): UserRepository =
-        UserRepositoryImpl(localUserDataSource = localUserDataSource)
+    fun provideUserRepository(
+        localUserDataSource: LocalUserDataSource,
+        localDateFormatter: LocalDateFormatter
+    ): UserRepository =
+        UserRepositoryImpl(
+            localUserDataSource = localUserDataSource,
+            localDateFormatter = localDateFormatter
+        )
 }
