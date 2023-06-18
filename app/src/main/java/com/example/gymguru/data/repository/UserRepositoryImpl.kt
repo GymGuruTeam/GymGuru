@@ -1,16 +1,21 @@
 package com.example.gymguru.data.repository
 
+import com.example.gymguru.data.local.LocalUserDao
 import com.example.gymguru.data.local.LocalUserDataSource
 import com.example.gymguru.domain.formatter.LocalDateFormatter
+import com.example.gymguru.domain.mapper.DomainUserWeightMapper
+import com.example.gymguru.domain.model.UserWeight
 import com.example.gymguru.domain.repository.UserRepository
-import java.time.LocalDate
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
+import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val localUserDataSource: LocalUserDataSource,
-    private val localDateFormatter: LocalDateFormatter
+    private val localUserDao: LocalUserDao,
+    private val localDateFormatter: LocalDateFormatter,
+    private val domainUserWeightMapper: DomainUserWeightMapper
 ) : UserRepository {
     override fun observeLocalUserName(): Flow<String?> =
         localUserDataSource.observeLocalUserName()
@@ -42,5 +47,18 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun clearLocalUserData() {
         localUserDataSource.clearLocalUserData()
+    }
+
+    override suspend fun insertUserWeight(userWeight: UserWeight) {
+        localUserDao.insertUserWeight(domainUserWeightMapper(userWeight))
+    }
+
+    override suspend fun observeAllUserWeights(): Flow<List<UserWeight>> =
+        localUserDao.observeAllUserWeights().map { list ->
+            list.map { domainUserWeightMapper(it) }
+        }
+
+    override suspend fun deleteUserWeightById(userWeightId: Int) {
+        localUserDao.deleteUserWeightById(userWeightId)
     }
 }

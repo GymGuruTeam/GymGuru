@@ -27,6 +27,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.gymguru.R
 import com.example.gymguru.presentation.composables.GymGuruButton
+import com.example.gymguru.presentation.composables.GymGuruOutlinedTextField
 import com.example.gymguru.presentation.onboarding.OnBoardingViewModel
 import com.example.gymguru.presentation.ui.theme.dimensions
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
@@ -88,14 +89,28 @@ fun UserBirthdayPage(
             progress = { progress }
         )
 
-        GymGuruButton(
-            modifier = Modifier
-                .fillMaxWidth(0.7f),
-            text = viewState.birthday.toString(),
-            onClick = {
-                calendarState.show()
-            }
+        GymGuruOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(0.7f),
+            state = viewState.name,
+            onValueChange = { viewModel.updateUsername(it) },
+            hint = stringResource(R.string.name)
         )
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = "Your birthday",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            GymGuruButton(
+                modifier = Modifier
+                    .fillMaxWidth(0.7f),
+                text = viewState.birthday.toString(),
+                onClick = {
+                    calendarState.show()
+                }
+            )
+        }
 
         Row(
             modifier = Modifier
@@ -118,6 +133,7 @@ fun UserBirthdayPage(
                 modifier = Modifier
                     .fillMaxWidth(0.4f),
                 text = stringResource(R.string.next),
+                enabled = !viewState.name.isError && viewState.name.value.isNotEmpty(),
                 onClick = {
                     scope.launch {
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)

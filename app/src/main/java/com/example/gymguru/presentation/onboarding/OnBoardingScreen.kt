@@ -26,7 +26,7 @@ import androidx.navigation.NavController
 import com.example.gymguru.presentation.navigation.Screens
 import com.example.gymguru.presentation.onboarding.pages.FinishPage
 import com.example.gymguru.presentation.onboarding.pages.UserBirthdayPage
-import com.example.gymguru.presentation.onboarding.pages.UsernamePage
+import com.example.gymguru.presentation.onboarding.pages.UserDetailsPage
 import com.example.gymguru.presentation.onboarding.pages.WelcomePage
 import com.example.gymguru.presentation.ui.theme.dimensions
 import kotlinx.coroutines.flow.collectLatest
@@ -42,8 +42,8 @@ fun OnBoardingScreen(
 
     val pages = listOf(
         OnBoardingPages.OnBoardingPage { WelcomePage(pagerState) },
-        OnBoardingPages.OnBoardingPage { UsernamePage(viewModel, pagerState) },
         OnBoardingPages.OnBoardingPage { UserBirthdayPage(viewModel, pagerState) },
+        OnBoardingPages.OnBoardingPage { UserDetailsPage(viewModel, pagerState) },
         OnBoardingPages.OnBoardingPage { FinishPage(viewModel, pagerState) }
     )
 
