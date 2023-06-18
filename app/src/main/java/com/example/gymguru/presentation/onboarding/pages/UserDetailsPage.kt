@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun UsernamePage(
+fun UserDetailsPage(
     viewModel: OnBoardingViewModel,
     pagerState: PagerState
 ) {
@@ -59,7 +59,7 @@ fun UsernamePage(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = stringResource(R.string.onboarding_provide_name_content),
+            text = stringResource(R.string.onboarding_provide_details_content),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground
         )
@@ -74,17 +74,18 @@ fun UsernamePage(
 
         GymGuruOutlinedTextField(
             modifier = Modifier.fillMaxWidth(0.7f),
-            state = viewState.name,
-            onValueChange = { viewModel.updateUsername(it) },
-            hint = stringResource(R.string.name)
-        )
-
-        GymGuruOutlinedTextField(
-            modifier = Modifier.fillMaxWidth(0.7f),
             state = viewState.height,
             keyboardType = KeyboardType.Number,
             onValueChange = { viewModel.updateHeight(it) },
             hint = stringResource(R.string.height)
+        )
+
+        GymGuruOutlinedTextField(
+            modifier = Modifier.fillMaxWidth(0.7f),
+            state = viewState.weight,
+            keyboardType = KeyboardType.Decimal,
+            onValueChange = { viewModel.updateWeight(it) },
+            hint = stringResource(R.string.weight)
         )
 
         Row(
@@ -107,8 +108,8 @@ fun UsernamePage(
             GymGuruButton(
                 modifier = Modifier
                     .fillMaxWidth(0.4f),
-                enabled = !viewState.name.isError && viewState.name.value.isNotEmpty() &&
-                    !viewState.height.isError && viewState.height.value.isNotEmpty(),
+                enabled = !viewState.weight.isError && viewState.weight.value.isNotEmpty() &&
+                        !viewState.height.isError && viewState.height.value.isNotEmpty(),
                 text = stringResource(R.string.next),
                 onClick = {
                     scope.launch {

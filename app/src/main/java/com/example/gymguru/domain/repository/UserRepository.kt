@@ -1,10 +1,12 @@
 package com.example.gymguru.domain.repository
 
-import java.time.LocalDate
+import com.example.gymguru.domain.model.UserWeight
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 interface UserRepository {
 
+    // dats store
     fun observeLocalUserName(): Flow<String?>
 
     fun observeLocalUserHeight(): Flow<Int?>
@@ -22,4 +24,11 @@ interface UserRepository {
     suspend fun setLocalIsOnBoardingShown(isShown: Boolean)
 
     suspend fun clearLocalUserData()
+
+    // room
+    suspend fun insertUserWeight(userWeight: UserWeight)
+
+    suspend fun observeAllUserWeights(): Flow<List<UserWeight>>
+
+    suspend fun deleteUserWeightById(userWeightId: Int)
 }
