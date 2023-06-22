@@ -11,7 +11,9 @@ import com.example.gymguru.domain.usecase.SetIsOnBoardingShownUseCase
 import com.example.gymguru.domain.usecase.SetLocalUserBirthdayUseCase
 import com.example.gymguru.domain.usecase.SetLocalUserHeightUseCase
 import com.example.gymguru.domain.usecase.SetLocalUserNameUseCase
-import com.example.gymguru.presentation.composables.GymGuruTextFieldState
+import com.example.gymguru.domain.validator.UserHeightValidator
+import com.example.gymguru.domain.validator.UserWeightValidator
+import com.example.gymguru.domain.validator.UsernameValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -26,7 +28,10 @@ class OnBoardingViewModel @Inject constructor(
     private val setLocalUserHeightUseCase: SetLocalUserHeightUseCase,
     private val setLocalUserBirthdayUseCase: SetLocalUserBirthdayUseCase,
     private val setIsOnBoardingShownUseCase: SetIsOnBoardingShownUseCase,
-    private val insertLocalUserWeightUseCase: InsertLocalUserWeightUseCase
+    private val insertLocalUserWeightUseCase: InsertLocalUserWeightUseCase,
+    private val userWeightValidator: UserWeightValidator,
+    private val userHeightValidator: UserHeightValidator,
+    private val usernameValidator: UsernameValidator
 ) : ViewModel() {
 
     private val _viewState = mutableStateOf(OnBoardingViewState())
@@ -36,63 +41,15 @@ class OnBoardingViewModel @Inject constructor(
     val viewEvent = _viewEvent.asSharedFlow()
 
     fun updateUsername(input: String) {
-        if (input.length in MIN_NAME_LENGTH..MAX_NAME_LENGTH) {
-            _viewState.value = _viewState.value.copy(
-                name = GymGuruTextFieldState(
-                    value = input,
-                    isError = false,
-                    errorMessage = ""
-                )
-            )
-        } else {
-            _viewState.value = _viewState.value.copy(
-                name = GymGuruTextFieldState(
-                    value = input,
-                    isError = true,
-                    errorMessage = "Name should be $MIN_NAME_LENGTH to $MAX_NAME_LENGTH characters"
-                )
-            )
-        }
+        _viewState.value = _viewState.value.copy(name = usernameValidator(input))
     }
 
     fun updateHeight(input: String) {
-        if (input.isDigitsOnly() && isHeightCorrect(input)) {
-            _viewState.value = _viewState.value.copy(
-                height = GymGuruTextFieldState(
-                    value = input,
-                    isError = false,
-                    errorMessage = ""
-                )
-            )
-        } else {
-            _viewState.value = _viewState.value.copy(
-                height = GymGuruTextFieldState(
-                    value = input,
-                    isError = true,
-                    errorMessage = "Number between $MIN_HEIGHT-$MAX_HEIGHT"
-                )
-            )
-        }
+        _viewState.value = _viewState.value.copy(height = userHeightValidator(input))
     }
 
     fun updateWeight(input: String) {
-        if (isWeightCorrect(input)) {
-            _viewState.value = _viewState.value.copy(
-                weight = GymGuruTextFieldState(
-                    value = input,
-                    isError = false,
-                    errorMessage = ""
-                )
-            )
-        } else {
-            _viewState.value = _viewState.value.copy(
-                weight = GymGuruTextFieldState(
-                    value = input,
-                    isError = true,
-                    errorMessage = "Number between $MIN_WEIGHT-$MAX_WEIGHT"
-                )
-            )
-        }
+        _viewState.value = _viewState.value.copy(weight = userWeightValidator(input))
     }
 
     fun updateBirthday(date: LocalDate) {
@@ -114,7 +71,7 @@ class OnBoardingViewModel @Inject constructor(
             }
             try {
                 insertLocalUserWeightUseCase(
-                    UserWeight(1, _viewState.value.weight.value.toFloat(), LocalDate.now())
+                    UserWeight(null, _viewState.value.weight.value.toFloat(), LocalDate.now())
                 )
             } catch (e: java.lang.Exception) {
                 Timber.e("Couldn't insert weight")
@@ -122,26 +79,5 @@ class OnBoardingViewModel @Inject constructor(
             setIsOnBoardingShownUseCase(true)
             _viewEvent.emit(OnBoardingViewEvent.CloseOnBoarding)
         }
-    }
-
-    private fun isHeightCorrect(input: String): Boolean = try {
-        input.toInt() in MIN_HEIGHT..MAX_HEIGHT
-    } catch (e: Exception) {
-        false
-    }
-
-    private fun isWeightCorrect(input: String): Boolean = try {
-        input.toFloat() in MIN_WEIGHT..MAX_WEIGHT
-    } catch (e: Exception) {
-        false
-    }
-
-    companion object {
-        private const val MIN_NAME_LENGTH = 3
-        private const val MAX_NAME_LENGTH = 16
-        private const val MIN_HEIGHT = 50
-        private const val MAX_HEIGHT = 300
-        private const val MIN_WEIGHT = 20f
-        private const val MAX_WEIGHT = 500f
     }
 }

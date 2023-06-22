@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gymguru.presentation.home.HomeScreen
 import com.example.gymguru.presentation.onboarding.OnBoardingScreen
+import com.example.gymguru.presentation.profile.ProfileScreen
 
 @Composable
 fun HomeNavGraph(
@@ -26,6 +27,9 @@ fun HomeNavGraph(
         }
         composable(Screens.OnBoardingScreen.route) {
             OnBoardingScreen(navController, homeSnackBarHostState)
+        }
+        composable(Screens.ProfileScreen.route) {
+            ProfileScreen(navController, homeSnackBarHostState)
         }
     }
 }

@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "user_weight_table")
 data class UserWeightEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int? = 0,
     @ColumnInfo(name = "weight")
     val weight: Float?,
     @ColumnInfo(name = "date")
