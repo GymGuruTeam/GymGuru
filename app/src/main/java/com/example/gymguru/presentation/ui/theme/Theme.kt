@@ -99,6 +99,7 @@ fun GymGuruTheme(
             }
 
             val windowsInsetsController = WindowCompat.getInsetsController(window, view)
+            WindowCompat.setDecorFitsSystemWindows(window, false)
 
             windowsInsetsController.isAppearanceLightStatusBars = !darkTheme
             windowsInsetsController.isAppearanceLightNavigationBars = !darkTheme

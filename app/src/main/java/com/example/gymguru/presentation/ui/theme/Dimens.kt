@@ -17,7 +17,9 @@ data class Dimens(
     val recentlyPlayedImage: Dp = 64.dp,
     val recentlyPlayedIcon: Dp = 24.dp,
     val loginIcon: Dp = 96.dp,
-    val loginRoundedCorner: Dp = 32.dp
+    val loginRoundedCorner: Dp = 32.dp,
+    val iconMedium: Dp = 32.dp,
+    val cardMedium: Dp = 164.dp
 )
 
 val LocalDimens = compositionLocalOf { Dimens() }
