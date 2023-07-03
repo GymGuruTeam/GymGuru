@@ -7,6 +7,12 @@ import com.example.gymguru.data.model.ExerciseEntity
 @Dao
 interface LocalExerciseDao {
 
-    @Query("SELECT * FROM exercise_table WHERE name like '%' || :query || '%'")
-    fun getExercises(query: String): List<ExerciseEntity>
+    @Query(
+        "SELECT * FROM exercise_table WHERE name like '%' || :query || '%' " +
+                "AND type LIKE  '%' || :exerciseType || '%'"
+    )
+    fun getExercises(query: String, exerciseType: String): List<ExerciseEntity>
+
+    @Query("SELECT * FROM exercise_table WHERE id like :id")
+    fun getExercise(id: Int): ExerciseEntity
 }
