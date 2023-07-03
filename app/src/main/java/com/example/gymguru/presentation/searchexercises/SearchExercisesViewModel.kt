@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gymguru.domain.model.DomainExerciseType
 import com.example.gymguru.domain.usecase.GetExercisesUseCase
 import com.example.gymguru.presentation.composables.GymGuruTextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +33,7 @@ class SearchExercisesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(IO) {
-            searchItems("")
+            searchItems("", null)
         }
     }
 
@@ -43,12 +44,15 @@ class SearchExercisesViewModel @Inject constructor(
         searchExercise = viewModelScope.launch(IO) {
             delay(200L)
 
-            searchItems(query = query)
+            searchItems(
+                query = query,
+                searchType = viewState.value.selectedType
+            )
         }
     }
 
-    private suspend fun searchItems(query: String) {
-        val result = getExercisesUseCase(query)
+    private suspend fun searchItems(query: String, searchType: DomainExerciseType?) {
+        val result = getExercisesUseCase(query, searchType)
         withContext(Main) {
             _viewState.value = _viewState.value.copy(exercises = result)
         }
@@ -59,6 +63,18 @@ class SearchExercisesViewModel @Inject constructor(
             viewModelScope.launch {
                 _viewEvent.emit(SearchExercisesViewEvent.OpenExerciseDetails(id))
             }
+        }
+    }
+
+    fun onTypeClicked(type: DomainExerciseType? = null) {
+        _viewState.value =
+            _viewState.value.copy(selectedType = type)
+
+        viewModelScope.launch(IO) {
+            searchItems(
+                query = viewState.value.query.value,
+                searchType = type
+            )
         }
     }
 }
