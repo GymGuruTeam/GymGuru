@@ -16,4 +16,8 @@
     <string name="onboarding_finish_title">Done!</string>
     <string name="open_profile">Open profile</string>
     <string name="add_current_weight">Add current weight</string>
+    <string name="navigate_back">Navigate back</string>
+    <string name="exercise_preview">Exercise preview</string>
+    <string name="search">Search</string>
+    <string name="search_exercises_screen">Search exercises screen</string>
 </resources>

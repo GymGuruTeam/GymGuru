@@ -22,6 +22,7 @@ class GymGuruDatabaseModule {
             GymGuruDatabase::class.java,
             GYM_GURU_DATABASE_NAME
         )
+            .createFromAsset("database/gym_guru_database.db")
             .fallbackToDestructiveMigration()
             .build()
     }
@@ -30,7 +31,11 @@ class GymGuruDatabaseModule {
     @Provides
     fun provideLocalUserDao(database: GymGuruDatabase) = database.localUserDao
 
+    @Singleton
+    @Provides
+    fun provideLocalExerciseDao(database: GymGuruDatabase) = database.localExerciseDao
+
     companion object {
-        private const val GYM_GURU_DATABASE_NAME = "gym_guru_database"
+        private const val GYM_GURU_DATABASE_NAME = "gym_guru_database.db"
     }
 }

@@ -36,12 +36,12 @@ fun HomeAppBar(
         },
         navigationIcon = {
             IconButton(
-                onClick = { /*TODO open exercises screen*/ },
+                onClick = { navController.navigate(Screens.SearchExercisesScreen.route) },
                 content = {
                     Icon(
                         modifier = Modifier.size(MaterialTheme.dimensions.iconMedium),
                         imageVector = Icons.Default.List,
-                        contentDescription = "todo"
+                        contentDescription = stringResource(R.string.search_exercises_screen)
                     )
                 }
             )

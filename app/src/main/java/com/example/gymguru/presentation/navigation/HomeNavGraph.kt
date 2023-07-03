@@ -6,9 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.gymguru.presentation.exercisedetails.ExerciseDetailsScreen
 import com.example.gymguru.presentation.home.HomeScreen
 import com.example.gymguru.presentation.onboarding.OnBoardingScreen
 import com.example.gymguru.presentation.profile.ProfileScreen
+import com.example.gymguru.presentation.searchexercises.SearchExercisesScreen
 
 @Composable
 fun HomeNavGraph(
@@ -30,6 +32,12 @@ fun HomeNavGraph(
         }
         composable(Screens.ProfileScreen.route) {
             ProfileScreen(navController, homeSnackBarHostState)
+        }
+        composable(Screens.SearchExercisesScreen.route) {
+            SearchExercisesScreen(navController)
+        }
+        composable(Screens.ExerciseDetailsScreen.route) {
+            ExerciseDetailsScreen()
         }
     }
 }
