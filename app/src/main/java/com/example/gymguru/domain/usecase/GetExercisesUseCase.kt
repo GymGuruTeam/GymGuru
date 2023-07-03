@@ -7,5 +7,6 @@ import javax.inject.Inject
 class GetExercisesUseCase @Inject constructor(
     private val exerciseRepository: ExerciseRepository
 ) {
-    suspend operator fun invoke(): List<DomainExercise> = exerciseRepository.getExercises()
+    suspend operator fun invoke(query: String): List<DomainExercise> =
+        exerciseRepository.getExercises(query = query)
 }

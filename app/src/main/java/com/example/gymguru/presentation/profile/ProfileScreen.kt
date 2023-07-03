@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
@@ -49,7 +50,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.gymguru.R
-import com.example.gymguru.domain.model.UserWeight
+import com.example.gymguru.domain.model.DomainUserWeight
 import com.example.gymguru.presentation.composables.GymGuruButton
 import com.example.gymguru.presentation.composables.GymGuruOutlinedTextField
 import com.example.gymguru.presentation.ui.theme.dimensions
@@ -148,6 +149,14 @@ fun ProfileScreen(
                         contentDescription = "Edit profile"
                     )
                 }
+            },
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = stringResource(R.string.navigate_back)
+                    )
+                }
             }
         )
 
@@ -186,7 +195,7 @@ fun ProfileScreen(
 fun UserWeightView(
     viewState: ProfileScreenViewState,
     openAddWeightDialog: () -> Unit,
-    deleteWeight: (UserWeight) -> Unit
+    deleteWeight: (DomainUserWeight) -> Unit
 ) {
     val weightState = rememberLazyListState()
 

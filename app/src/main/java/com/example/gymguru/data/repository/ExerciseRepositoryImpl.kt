@@ -11,6 +11,6 @@ class ExerciseRepositoryImpl @Inject constructor(
     private val domainExerciseMapper: DomainExerciseMapper
 ) : ExerciseRepository {
 
-    override suspend fun getExercises(): List<DomainExercise> =
-        localExerciseDao.getExercises().map { domainExerciseMapper(it) }
+    override suspend fun getExercises(query: String): List<DomainExercise> =
+        localExerciseDao.getExercises(query = query).map { domainExerciseMapper(it) }
 }

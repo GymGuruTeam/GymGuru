@@ -4,7 +4,7 @@ import com.example.gymguru.data.local.LocalUserDao
 import com.example.gymguru.data.local.LocalUserDataSource
 import com.example.gymguru.domain.formatter.LocalDateFormatter
 import com.example.gymguru.domain.mapper.DomainUserWeightMapper
-import com.example.gymguru.domain.model.UserWeight
+import com.example.gymguru.domain.model.DomainUserWeight
 import com.example.gymguru.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -49,11 +49,11 @@ class UserRepositoryImpl @Inject constructor(
         localUserDataSource.clearLocalUserData()
     }
 
-    override suspend fun insertUserWeight(userWeight: UserWeight) {
-        localUserDao.insertUserWeight(domainUserWeightMapper(userWeight))
+    override suspend fun insertUserWeight(domainUserWeight: DomainUserWeight) {
+        localUserDao.insertUserWeight(domainUserWeightMapper(domainUserWeight))
     }
 
-    override suspend fun observeAllUserWeights(): Flow<List<UserWeight>> =
+    override fun observeAllUserWeights(): Flow<List<DomainUserWeight>> =
         localUserDao.observeAllUserWeights().map { list ->
             list.map { domainUserWeightMapper(it) }
         }

@@ -8,6 +8,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.KeyboardType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,7 +19,8 @@ fun GymGuruOutlinedTextField(
     state: GymGuruTextFieldState,
     readOnly: Boolean = false,
     onValueChange: (String) -> Unit,
-    hint: String = ""
+    hint: String = "",
+    shape: Shape = OutlinedTextFieldDefaults.shape
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -38,11 +40,12 @@ fun GymGuruOutlinedTextField(
                 )
             }
         },
+        shape = shape,
         maxLines = 1,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.primary,
             unfocusedBorderColor = MaterialTheme.colorScheme.onBackground,
-            errorSupportingTextColor = MaterialTheme.colorScheme.error,
+            errorSupportingTextColor = MaterialTheme.colorScheme.error
         )
     )
 }

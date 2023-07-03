@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.gymguru.domain.model.UserWeight
+import com.example.gymguru.domain.model.DomainUserWeight
 import com.example.gymguru.domain.usecase.DeleteLocalUserWeightByIdUseCase
 import com.example.gymguru.domain.usecase.InsertLocalUserWeightUseCase
 import com.example.gymguru.domain.usecase.ObserveLocalUserBirthdayUseCase
@@ -115,7 +115,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch(IO) {
             try {
                 insertLocalUserWeightUseCase(
-                    UserWeight(
+                    DomainUserWeight(
                         null,
                         _viewState.value.weight.value.toFloat(),
                         LocalDate.now()
@@ -127,9 +127,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun deleteUserWeight(userWeight: UserWeight) {
+    fun deleteUserWeight(domainUserWeight: DomainUserWeight) {
         viewModelScope.launch(IO) {
-            userWeight.id?.let { deleteLocalUserWeightByIdUseCase(it) }
+            domainUserWeight.id?.let { deleteLocalUserWeightByIdUseCase(it) }
         }
     }
 }

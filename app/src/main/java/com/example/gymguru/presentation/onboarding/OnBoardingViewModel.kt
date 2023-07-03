@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.gymguru.domain.model.UserWeight
+import com.example.gymguru.domain.model.DomainUserWeight
 import com.example.gymguru.domain.usecase.InsertLocalUserWeightUseCase
 import com.example.gymguru.domain.usecase.SetIsOnBoardingShownUseCase
 import com.example.gymguru.domain.usecase.SetLocalUserBirthdayUseCase
@@ -71,7 +71,7 @@ class OnBoardingViewModel @Inject constructor(
             }
             try {
                 insertLocalUserWeightUseCase(
-                    UserWeight(null, _viewState.value.weight.value.toFloat(), LocalDate.now())
+                    DomainUserWeight(null, _viewState.value.weight.value.toFloat(), LocalDate.now())
                 )
             } catch (e: java.lang.Exception) {
                 Timber.e("Couldn't insert weight")
