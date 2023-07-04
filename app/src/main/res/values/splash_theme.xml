@@ -2,8 +2,7 @@
 <resources>
 
     <style name="Theme.GymGuru.SplashScreen" parent="Theme.SplashScreen">
-        <!-- TODO replace with app icon -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
         <item name="postSplashScreenTheme">@style/Theme.GymGuru</item>
     </style>
 
