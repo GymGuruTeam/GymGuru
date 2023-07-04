@@ -27,4 +27,6 @@
     <string name="create_plan">Create plan</string>
     <string name="my_plans">My plans</string>
     <string name="remove_from_plan">Remove from plan</string>
+    <string name="notification_body">Time to sweat it out! Your workout awaits, let\'s get moving! 💪😃</string>
+    <string name="notification_title">🔔 Time to Get Active! 🔔</string>
 </resources>

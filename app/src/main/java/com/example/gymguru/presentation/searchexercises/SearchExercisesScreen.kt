@@ -124,9 +124,7 @@ fun SearchExercisesScreen(
                         .fillMaxWidth()
                 ) {
                     Row(
-                        modifier = Modifier.clickable {
-                            viewModel.onExerciseClick(it.id)
-                        },
+                        modifier = Modifier.clickable { viewModel.onExerciseClick(it.id) },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         AsyncImage(
