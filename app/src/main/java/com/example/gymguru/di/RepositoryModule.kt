@@ -1,9 +1,11 @@
 package com.example.gymguru.di
 
 import com.example.gymguru.data.local.LocalExerciseDao
+import com.example.gymguru.data.local.LocalNotificationManager
 import com.example.gymguru.data.local.LocalUserDao
 import com.example.gymguru.data.local.LocalUserDataSource
 import com.example.gymguru.data.repository.ExerciseRepositoryImpl
+import com.example.gymguru.data.repository.NotificationRepositoryImpl
 import com.example.gymguru.data.repository.UserRepositoryImpl
 import com.example.gymguru.domain.formatter.LocalDateFormatter
 import com.example.gymguru.domain.mapper.DomainExerciseMapper
@@ -11,6 +13,7 @@ import com.example.gymguru.domain.mapper.DomainUserWeightMapper
 import com.example.gymguru.domain.mapper.DomainWorkoutPlanMapper
 import com.example.gymguru.domain.mapper.DomainWorkoutPlanWithExercisesMapper
 import com.example.gymguru.domain.repository.ExerciseRepository
+import com.example.gymguru.domain.repository.NotificationRepository
 import com.example.gymguru.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -50,4 +53,9 @@ object RepositoryModule {
         domainWorkoutPlanMapper = domainWorkoutPlanMapper,
         domainWorkoutPlanWithExercisesMapper = domainWorkoutPlanWithExercisesMapper
     )
+
+    @Provides
+    fun provideNotificationRepository(
+        localNotificationManager: LocalNotificationManager
+    ): NotificationRepository = NotificationRepositoryImpl(localNotificationManager)
 }

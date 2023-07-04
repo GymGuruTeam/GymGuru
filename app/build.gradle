@@ -80,6 +80,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "androidx.hilt:hilt-work:$hilt_work_version"
+    implementation "androidx.work:work-runtime-ktx:$hilt_worker_version"
 
     // data store
     implementation "androidx.datastore:datastore-preferences:$datastore_version"
