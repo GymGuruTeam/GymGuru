@@ -20,4 +20,11 @@
     <string name="exercise_preview">Exercise preview</string>
     <string name="search">Search</string>
     <string name="search_exercises_screen">Search exercises screen</string>
+    <string name="title">Title</string>
+    <string name="add_workout_plan">Add workout plan</string>
+    <string name="workout_plan">Workout plan</string>
+    <string name="edit_plan">Edit plan</string>
+    <string name="create_plan">Create plan</string>
+    <string name="my_plans">My plans</string>
+    <string name="remove_from_plan">Remove from plan</string>
 </resources>

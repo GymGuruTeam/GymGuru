@@ -8,6 +8,8 @@ import com.example.gymguru.data.repository.UserRepositoryImpl
 import com.example.gymguru.domain.formatter.LocalDateFormatter
 import com.example.gymguru.domain.mapper.DomainExerciseMapper
 import com.example.gymguru.domain.mapper.DomainUserWeightMapper
+import com.example.gymguru.domain.mapper.DomainWorkoutPlanMapper
+import com.example.gymguru.domain.mapper.DomainWorkoutPlanWithExercisesMapper
 import com.example.gymguru.domain.repository.ExerciseRepository
 import com.example.gymguru.domain.repository.UserRepository
 import dagger.Module
@@ -39,9 +41,13 @@ object RepositoryModule {
     @Provides
     fun provideExerciseRepository(
         localExerciseDao: LocalExerciseDao,
-        domainExerciseMapper: DomainExerciseMapper
+        domainExerciseMapper: DomainExerciseMapper,
+        domainWorkoutPlanMapper: DomainWorkoutPlanMapper,
+        domainWorkoutPlanWithExercisesMapper: DomainWorkoutPlanWithExercisesMapper
     ): ExerciseRepository = ExerciseRepositoryImpl(
         localExerciseDao = localExerciseDao,
-        domainExerciseMapper = domainExerciseMapper
+        domainExerciseMapper = domainExerciseMapper,
+        domainWorkoutPlanMapper = domainWorkoutPlanMapper,
+        domainWorkoutPlanWithExercisesMapper = domainWorkoutPlanWithExercisesMapper
     )
 }
