@@ -5,9 +5,16 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.gymguru.data.model.ExerciseEntity
 import com.example.gymguru.data.model.UserWeightEntity
+import com.example.gymguru.data.model.WorkoutPlanEntity
+import com.example.gymguru.data.model.WorkoutPlanExerciseCrossRef
 
 @Database(
-    entities = [UserWeightEntity::class, ExerciseEntity::class],
+    entities = [
+        UserWeightEntity::class,
+        ExerciseEntity::class,
+        WorkoutPlanEntity::class,
+        WorkoutPlanExerciseCrossRef::class
+    ],
     version = 1,
     exportSchema = false
 )

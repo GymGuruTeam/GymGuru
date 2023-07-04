@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import com.example.gymguru.presentation.exercisedetails.ExerciseDetailsScreen
 import com.example.gymguru.presentation.home.HomeScreen
 import com.example.gymguru.presentation.onboarding.OnBoardingScreen
+import com.example.gymguru.presentation.planworkout.PlanWorkoutScreen
 import com.example.gymguru.presentation.profile.ProfileScreen
 import com.example.gymguru.presentation.searchexercises.SearchExercisesScreen
 
@@ -47,6 +48,16 @@ fun HomeNavGraph(
             )
         ) {
             ExerciseDetailsScreen()
+        }
+        composable(
+            Screens.PlanWorkoutScreen.route + "/{planId}",
+            arguments = listOf(
+                navArgument(name = "planId") {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            PlanWorkoutScreen()
         }
     }
 }
